@@ -29,6 +29,7 @@ mock.onPost('/api/account/login').reply(async (config: any) => {
     await fakeRequest(1000);
 
     const { email, password } = JSON.parse(config.data);
+    console.log(config.data);
     const user = users.find((_user) => _user.email === email);
 
     if (!user) {

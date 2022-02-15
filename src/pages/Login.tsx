@@ -1,33 +1,43 @@
+import { useState } from 'react'
 // @mui
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, TextField, Button } from '@mui/material';
 // components
 import Page from '../components/Page';
+import axios from '../utils/axios';
 
 // ----------------------------------------------------------------------
 
 export default function LandingPage() {
+  const [email, setEmail] = useState<string>(''); 
+  const [password, setPwd]= useState<string>('');
+
+  function onSubmit(){
+    // email, password
+    // post request LOGIN
+    axios.post('api/account/login', { 
+        email: email,
+        password:password})
+      .then(res =>{
+        console.log(res);
+        console.log(res.data);
+      })
+  };
+
   return (
     <Page title="Login Page">
       <Container>
-        <Typography variant="h3" component="h1" paragraph>
-          Login Page
-        </Typography>
-        <Typography gutterBottom>
-          Curabitur turpis. Vestibulum facilisis, purus nec pulvinar iaculis, ligula mi congue nunc,
-          vitae euismod ligula urna in dolor. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit
-          id, lorem. Phasellus blandit leo ut odio. Vestibulum ante ipsum primis in faucibus orci
-          luctus et ultrices posuere cubilia Curae; Fusce id purus. Aliquam lorem ante, dapibus in,
-          viverra quis, feugiat a, tellus. In consectetuer turpis ut velit. Aenean posuere, tortor
-          sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus.
-          Vestibulum suscipit nulla quis orci. Nam commodo suscipit quam. Sed a libero.
-        </Typography>
-        <Typography>
-          Praesent ac sem eget est egestas volutpat. Phasellus viverra nulla ut metus varius
-          laoreet. Curabitur ullamcorper ultricies nisi. Ut non enim eleifend felis pretium feugiat.
-          Donec mi odio, faucibus at, scelerisque quis, convallis in, nisi. Fusce vel dui. Quisque
-          libero metus, condimentum nec, tempor a, commodo mollis, magna. In enim justo, rhoncus ut,
-          imperdiet a, venenatis vitae, justo. Cras dapibus.
-        </Typography>
+          <Typography variant="h3" component="h1" paragraph>
+            Login Page
+          </Typography>
+          <Typography>
+          <TextField id="email" onChange={(e) =>setEmail(e.target.value)} value={email} name="email" label="Email" variant="standard" />
+          </Typography>
+          <Typography>
+            <TextField id="password" name="password" onChange={(e)=>setPwd(e.target.value)} value={password} label="Password" variant="standard" type='password'/>
+          </Typography>
+          <Typography>
+            <Button onClick={onSubmit} variant="contained" type='submit'>Submit</Button>
+          </Typography>
       </Container>
     </Page>
   );
