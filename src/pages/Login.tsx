@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 // @mui
 import { Container, Typography, TextField, Button } from '@mui/material';
 // components
@@ -18,8 +19,8 @@ export default function LandingPage() {
         email: email,
         password:password})
       .then(res =>{
-        console.log(res);
-        console.log(res.data);
+          // console.log(res.data);
+          localStorage.setItem('resDataUser',JSON.stringify(res.data.user));
       })
   };
 
@@ -38,6 +39,13 @@ export default function LandingPage() {
           <Typography>
             <Button onClick={onSubmit} variant="contained" type='submit'>Submit</Button>
           </Typography>
+      </Container>
+
+      <Container>
+          <Button  onClick={()=>{
+              window.location.href='/user-profile';
+            }} variant="contained" type='button'>Profile
+          </Button>
       </Container>
     </Page>
   );
